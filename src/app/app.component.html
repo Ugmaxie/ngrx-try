@@ -1,3 +1,65 @@
-<h1>
+<div class="party-name">
   {{title}}
-</h1>
+  <div>
+    <input type="text" placeholder="Enter new party name" [(ngModel)]="pageTitle">
+    <button (click)="setNewTitle(pageTitle)">Change party name</button>
+    <button (click)="resetTitle()">Reset name</button>
+  </div>
+</div>
+
+<div class="add-new-person">
+  <div class="field-label">Add new guest to list</div>
+  <div class="add-new-person__data-container">
+    <div class="guest-data">
+      <div class="guest-data__container">
+        <label for="guestName">Guest Name</label>
+        <input id="guestName" type="text" placeholder="Guest name" #person [(ngModel)]="addNewGuestData.name">
+      </div>
+
+      <div class="guest-data__container">
+        <label for="guestPhone">Guest Phone</label>
+        <input id="guestPhone" type="text" placeholder="Guest phone number" #phone [(ngModel)]="addNewGuestData.phone">
+      </div>
+    </div>
+
+    <div class="guest-data">
+      <div class="guest-data__container">
+        <label for="guestGender">Guest Gender</label>
+        <select id="guestGender" name="Gender" #gender [(ngModel)]="addNewGuestData.gender">
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <div class="guest-data__container">
+        <label for="guestDrunker">Drunker</label>
+        <input id="guestDrunker" type="checkbox" #drunker [(ngModel)]="addNewGuestData.drunker">
+      </div>
+    </div>
+  </div>
+
+  <div class="add-person-button">
+    <button (click)="addPerson(person.value, phone.value, gender.value, drunker.checked)">Add person</button>
+  </div>
+</div>
+
+<div>
+  <div class="field-label">Added guests:</div>
+  <div class="guests-remover" *ngFor="let addedGuest of totalGuests">
+    <div class="guests-remover__added-guest" *ngIf="addedGuest?.canBeRemoved">
+      <span class="guests-remover__guest-name">{{addedGuest?.name}}</span>
+      <div class="guests-remover__remove-button" (click)="removePerson(addedGuest)">X</div>
+    </div>
+  </div>
+
+  <div>
+    <div class="field-label">Guests: ({{totalGuests?.length}})</div>
+    <div class="guest" *ngFor="let guest of totalGuests">
+      <div class="guest__name">Name: {{guest.name}}</div>
+      <div class="guest__phone">Phone: {{guest.phone}}</div>
+      <div class="guest__gender">Gender: {{guest.gender}}</div>
+      <div class="guest__drunker">Great drunker: {{guest.drunker}}</div>
+    </div>
+  </div>
+</div>

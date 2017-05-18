@@ -1,0 +1,91 @@
+.party-name {
+	font-size: 30px;
+	color: #858591;
+	font-weight: 700;
+	padding: 10px;
+	margin-bottom: 20px;
+}
+
+.add-new-person {
+	display: inline-flex;
+	flex-direction: column;
+	padding: 15px;
+}
+
+.add-new-person__data-container {
+	display: flex;
+}
+
+.add-new-person__data-container input,
+.add-new-person__data-container select {
+	width: 100%;
+	padding: 5px;
+	margin-left: 10px;
+	border-radius: 7px;
+	background-color: #FFFFFF;
+}
+
+.guest-data {
+	display: flex;
+	flex-direction: column;
+	flex: 1 0;
+	padding: 0 15px;
+}
+
+.guest-data__container {
+	display: flex;
+	flex-direction: row;
+	padding: 5px;
+}
+
+.field-label {
+	display: flex;
+	font-size: 17px;
+	font-weight: 700;
+	color: gray;
+	padding-bottom: 5px;
+}
+
+.guest {
+	min-width: 160px;
+	display: inline-flex;
+	flex-direction: column;
+	border: 1px solid #000;
+	border-radius: 7px;
+	padding: 5px;
+	margin-right: 10px;
+}
+
+.add-person-button button {
+	text-align: center;
+	border-radius: 5px;
+	margin-top: 10px;
+}
+
+.guests-remover {
+	display: inline-flex;
+	flex-direction: row;
+}
+
+.guests-remover__added-guest {
+	display: inline-flex;
+	border: 1px solid #000;
+	border-radius: 7px;
+	margin-right: 10px;
+}
+
+.guests-remover__guest-name {
+	padding: 5px;
+}
+
+.guests-remover__remove-button {
+	display: inline-flex;
+	border-left: 1px solid #000;
+	border-radius: 0 7px 7px 0;
+	padding: 5px;
+	cursor: pointer;
+}
+
+.guests-remover__remove-button:hover {
+	background-color: #e0e0e0;
+}
