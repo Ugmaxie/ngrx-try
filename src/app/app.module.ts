@@ -9,6 +9,7 @@ import myWildReducer from './reducers';
 import { AppComponent } from './app.component';
 import { AppService, GuestService } from './shared';
 import { ProfileEffects } from './effects';
+import { TodoActions } from './actions';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { ProfileEffects } from './effects';
     EffectsModule.run(ProfileEffects)
   ],
   providers: [
+    TodoActions,
     AppService,
     GuestService
   ],

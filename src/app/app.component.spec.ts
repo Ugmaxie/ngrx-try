@@ -7,6 +7,7 @@ import 'rxjs/add/observable/from';
 
 import { AppComponent } from './app.component';
 import { myWildReducer } from './reducers/reducer';
+import { TodoActions } from './actions';
 
 describe('AppComponent', () => {
   const addNewGuestDataMock = {name: '', phone: '', gender: 'male', drunker: false, canBeRemoved: true};
@@ -21,6 +22,9 @@ describe('AppComponent', () => {
       imports: [
         FormsModule,
         StoreModule.provideStore(myWildReducer)
+      ],
+      providers: [
+        TodoActions
       ]
     }).compileComponents();
 
@@ -32,7 +36,7 @@ describe('AppComponent', () => {
     expect(context).toBeTruthy();
   }));
 
-  it('should check ngOnInit', () => {
+  it('should check ngOnInit with title res.type', () => {
     spyOn(context.store, 'select').and
       .returnValue(Observable.from([{type: 'title', setNewTitle: 'Name of party is: Any party.'}]));
     spyOn(context, 'resetTitle').and.stub();
@@ -45,6 +49,56 @@ describe('AppComponent', () => {
     expect(context.addNewGuestData).toEqual(addNewGuestDataMock);
     expect(context.title).toContain('Name of party is:');
     expect(context.totalGuests).toEqual([]);
+    expect(context.resetTitle).toHaveBeenCalled();
+
+    jasmine.clock().uninstall();
+  });
+
+  it('should check ngOnInit with SET_NEW_TITLE res.type', () => {
+    spyOn(context.store, 'select').and
+      .returnValue(Observable.from([{type: 'SET_NEW_TITLE', setNewTitle: 'Name of party is: Any party.'}]));
+    spyOn(context, 'resetTitle').and.stub();
+
+    context.ngOnInit();
+
+    jasmine.clock().install();
+    jasmine.clock().tick(1000);
+
+    expect(context.addNewGuestData).toEqual(addNewGuestDataMock);
+    expect(context.title).toContain('Name of party is:');
+    expect(context.totalGuests).toEqual([]);
+    expect(context.resetTitle).toHaveBeenCalled();
+
+    jasmine.clock().uninstall();
+  });
+
+  it('should check ngOnInit with USER res.type', () => {
+    spyOn(context.store, 'select').and
+      .returnValue(Observable.from([{
+        type: 'user', guests: [{
+          name: 'Rita',
+          phone: '03',
+          gender: 'female',
+          drunker: true,
+          canBeRemoved: true
+        }]
+      }]));
+    spyOn(context, 'resetTitle').and.stub();
+
+    context.ngOnInit();
+
+    jasmine.clock().install();
+    jasmine.clock().tick(1000);
+
+    expect(context.addNewGuestData).toEqual(addNewGuestDataMock);
+    expect(context.title).toBeUndefined();
+    expect(context.totalGuests).toEqual([{
+      name: 'Rita',
+      phone: '03',
+      gender: 'female',
+      drunker: true,
+      canBeRemoved: true
+    }]);
     expect(context.resetTitle).toHaveBeenCalled();
 
     jasmine.clock().uninstall();

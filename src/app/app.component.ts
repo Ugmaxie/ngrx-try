@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { addNewGuest, getGuests, removeGuest, getTitle, setTitle } from './reducers/reducer';
+import { TodoActions } from './actions';
 import { Guest, ResponseApp } from './interfaces';
 
 @Component({
@@ -17,7 +17,8 @@ export class AppComponent implements OnInit {
   public addNewGuestData: Guest;
   public store: Store<any>;
 
-  public constructor(store: Store<any>) {
+  public constructor(store: Store<any>,
+                     private todoActions: TodoActions) {
     this.store = store;
   };
 
@@ -39,12 +40,12 @@ export class AppComponent implements OnInit {
   }
 
   public resetTitle(): void {
-    this.store.dispatch(getTitle());
-    this.store.dispatch(getGuests());
+    this.store.dispatch(this.todoActions.getTitle());
+    this.store.dispatch(this.todoActions.getGuests());
   }
 
   public setNewTitle(inputData: string): void {
-    this.store.dispatch(setTitle(inputData));
+    this.store.dispatch(this.todoActions.setTitle(inputData));
     this.pageTitle = '';
   }
 
@@ -59,12 +60,12 @@ export class AppComponent implements OnInit {
 
     this.addNewGuestData = {name: '', phone: '', gender: 'male', drunker: false, canBeRemoved: true};
 
-    this.store.dispatch(addNewGuest(guestData));
-    this.store.dispatch(getGuests());
+    this.store.dispatch(this.todoActions.addNewGuest(guestData));
+    this.store.dispatch(this.todoActions.getGuests());
   }
 
   public removePerson(guest: Guest): void {
-    this.store.dispatch(removeGuest(guest));
-    this.store.dispatch(getGuests());
+    this.store.dispatch(this.todoActions.removeGuest(guest));
+    this.store.dispatch(this.todoActions.getGuests());
   }
 }

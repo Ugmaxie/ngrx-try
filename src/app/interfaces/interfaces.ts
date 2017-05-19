@@ -24,6 +24,9 @@ export interface PartyTitle {
 export interface ResponseApp {
   guests?: Guest[];
   setNewTitle?: string;
+  addNewGuest?: Guest;
+  removeGuest?: Guest;
   type: string;
   pending?: boolean;
+  error?: string;
 }

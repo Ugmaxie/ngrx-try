@@ -1,90 +1,6 @@
-import { getTitle, setTitle, getGuests, addNewGuest, removeGuest, myWildReducer } from './reducer';
+import { myWildReducer } from './reducer';
 
 describe('Actions.', () => {
-  it('should return action to get default title', () => {
-    const expectedAction = {
-      type: 'GET_TITLE',
-      payload: {setNewTitle: 'My new Party'}
-    };
-
-    const action = getTitle();
-
-    expect(action).toEqual(expectedAction);
-  });
-
-  it('should return action to set new title', () => {
-    const expectedAction = {
-      type: 'SET_NEW_TITLE',
-      payload: {setNewTitle: 'SET THE NEWEST PARTY'}
-    };
-
-    const action = setTitle('SET THE NEWEST PARTY');
-
-    expect(action).toEqual(expectedAction);
-  });
-
-  it('should return action to get guests from DB', () => {
-    const expectedAction = {
-      type: 'GET_GUESTS'
-    };
-
-    const action = getGuests();
-
-    expect(action).toEqual(expectedAction);
-  });
-
-  it('should return action to add new guest', () => {
-    const newGuestMock = {
-      name: 'John Doe',
-      phone: '911',
-      gender: 'male',
-      drunker: true,
-      canBeRemoved: true
-    };
-    const expectedAction = {
-      type: 'ADD_NEW_GUEST',
-      payload: {
-        addNewGuest: {
-          name: 'John Doe',
-          phone: '911',
-          gender: 'male',
-          drunker: true,
-          canBeRemoved: true
-        }
-      }
-    };
-
-    const action = addNewGuest(newGuestMock);
-
-    expect(action).toEqual(expectedAction);
-  });
-
-  it('should return action to remove invited guest', () => {
-    const newGuestMock = {
-      name: 'John Doe',
-      phone: '911',
-      gender: 'male',
-      drunker: true,
-      canBeRemoved: true
-    };
-    const expectedAction = {
-      type: 'REMOVE_GUEST',
-      payload: {
-        removeGuest: {
-          name: 'John Doe',
-          phone: '911',
-          gender: 'male',
-          drunker: true,
-          canBeRemoved: true
-        }
-      }
-    };
-
-    const action = removeGuest(newGuestMock);
-
-    expect(action).toEqual(expectedAction);
-  });
-
   it('should send request to get title and return new state', () => {
     const oldState = {};
     const newState = myWildReducer(oldState, {type: 'GET_TITLE'});
@@ -215,7 +131,8 @@ describe('Actions.', () => {
   it('should send request for getting guests, got Success and return new state', () => {
     const oldState = {};
     const newState = myWildReducer(oldState, {
-      type: 'GET_GUESTS_SUCCESS', payload: {guests: [1, 2]}});
+      type: 'GET_GUESTS_SUCCESS', payload: {guests: [1, 2]}
+    });
 
     expect(newState.pending).toEqual(false);
     expect(newState.guests).toEqual([1, 2]);
