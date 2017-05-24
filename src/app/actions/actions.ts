@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
-import { Guest } from '../interfaces/interfaces';
+import {Guest, Title} from '../interfaces/interfaces';
 
 @Injectable()
 export class TodoActions {
@@ -25,36 +25,62 @@ export class TodoActions {
   static REMOVE_GUEST_ERROR = 'REMOVE_GUEST_ERROR';
 
   getTitle(): Action {
-    return {
-      type: TodoActions.GET_TITLE,
-      payload: {setNewTitle: 'My new Party'}
-    };
+    return { type: TodoActions.GET_TITLE, payload: {title: 'My new Party'} };
   }
 
-  setTitle(inputNewTitle: string): Action {
-    return {
-      type: TodoActions.SET_NEW_TITLE,
-      payload: {setNewTitle: inputNewTitle}
-    };
+  getTitleSuccess(payload: Title): Action {
+    return {type: TodoActions.GET_TITLE_SUCCESS, payload};
+  }
+
+  getTitleError(error): Action {
+    return {type: TodoActions.GET_TITLE_ERROR, payload: error};
+  }
+
+  setTitle(title: string): Action {
+    return { type: TodoActions.SET_NEW_TITLE, payload: {title} };
+  }
+
+  setTitleSuccess(payload: Title): Action {
+    return { type: TodoActions.SET_NEW_TITLE_SUCCESS, payload };
+  }
+
+  setTitleError(error): Action {
+    return { type: TodoActions.SET_NEW_TITLE_ERROR, payload: error };
   }
 
   getGuests(): Action {
-    return {
-      type: TodoActions.GET_GUESTS
-    };
+    return { type: TodoActions.GET_GUESTS };
+  }
+
+  getGuestsSuccess(payload: Guest[]): Action {
+    return { type: TodoActions.GET_GUESTS_SUCCESS, payload };
+  }
+
+  getGuestsError(error): Action {
+    return { type: TodoActions.GET_GUESTS_ERROR, payload: error };
   }
 
   addNewGuest(addNewGuestData: Guest): Action {
-    return {
-      type: TodoActions.ADD_NEW_GUEST,
-      payload: {addNewGuest: addNewGuestData}
-    };
+    return { type: TodoActions.ADD_NEW_GUEST, payload: {guest: addNewGuestData} };
+  }
+
+  addNewGuestSuccess(payload: {guest: Guest}): Action {
+    return { type: TodoActions.ADD_NEW_GUEST_SUCCESS, payload };
+  }
+
+  addNewGuestError(error): Action {
+    return { type: TodoActions.ADD_NEW_GUEST_ERROR, payload: error };
   }
 
   removeGuest(guestToRemove: Guest): Action {
-    return {
-      type: TodoActions.REMOVE_GUEST,
-      payload: {removeGuest: guestToRemove}
-    };
+    return { type: TodoActions.REMOVE_GUEST, payload: {guest: guestToRemove} };
+  }
+
+  removeGuestSuccess(payload: {guest: Guest}): Action {
+    return { type: TodoActions.REMOVE_GUEST_SUCCESS, payload };
+  }
+
+  removeGuestError(error): Action {
+    return { type: TodoActions.REMOVE_GUEST_ERROR, payload: error };
   }
 }

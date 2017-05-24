@@ -15,9 +15,9 @@ export class AppComponent implements OnInit {
   public pageTitle: string;
   public totalGuests: Guest[];
   public addNewGuestData: Guest;
-  public store: Store<any>;
+  public store: Store<{}>;
 
-  public constructor(store: Store<any>,
+  public constructor(store: Store<{}>,
                      private todoActions: TodoActions) {
     this.store = store;
   };
@@ -27,11 +27,11 @@ export class AppComponent implements OnInit {
     this.totalGuests = [];
 
     this.store.select('myWildReducer').subscribe((res: ResponseApp): void => {
-      if (res.type === 'title' || res.type === 'SET_NEW_TITLE') {
-        this.title = res.setNewTitle;
+      if (res.title) {
+        this.title = res.title;
       }
 
-      if (res.type === 'user') {
+      if (res.guests) {
         this.totalGuests = res.guests;
       }
     });
@@ -44,24 +44,15 @@ export class AppComponent implements OnInit {
     this.store.dispatch(this.todoActions.getGuests());
   }
 
-  public setNewTitle(inputData: string): void {
-    this.store.dispatch(this.todoActions.setTitle(inputData));
+  public setNewTitle(title: string): void {
+    this.store.dispatch(this.todoActions.setTitle(title));
     this.pageTitle = '';
   }
 
-  public addPerson(guestName: string, guestPhone: string, guestGender: string, guestDrunker: boolean): void {
-    const guestData: Guest = {
-      name: guestName,
-      phone: guestPhone,
-      gender: guestGender,
-      drunker: guestDrunker,
-      canBeRemoved: true
-    };
-
-    this.addNewGuestData = {name: '', phone: '', gender: 'male', drunker: false, canBeRemoved: true};
-
-    this.store.dispatch(this.todoActions.addNewGuest(guestData));
+  public addPerson(guest: Guest): void {
+    this.store.dispatch(this.todoActions.addNewGuest(guest));
     this.store.dispatch(this.todoActions.getGuests());
+    this.addNewGuestData = {name: '', phone: '', gender: 'male', drunker: false, canBeRemoved: true};
   }
 
   public removePerson(guest: Guest): void {

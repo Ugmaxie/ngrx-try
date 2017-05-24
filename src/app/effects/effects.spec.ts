@@ -7,11 +7,10 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
 
 import { ProfileEffects } from './effects';
-import { NewGuest } from '../models/guest.model';
 import { AppService, GuestService } from '../shared';
 import { TodoActions } from '../actions';
 import * as reducer from '../reducers/reducer';
-
+import {Guest} from '../interfaces/interfaces';
 
 describe('Effects.', () => {
   let runner;
@@ -19,6 +18,13 @@ describe('Effects.', () => {
   let appService;
   let guestService;
   let todoActions;
+  const newGuestMock: Guest = {
+    name: 'John Doe',
+    phone: '911',
+    gender: 'male',
+    drunker: true,
+    canBeRemoved: true
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -42,8 +48,8 @@ describe('Effects.', () => {
     todoActions = TestBed.get(TodoActions);
   });
 
-  it('should return a GET_TITLE_SUCCESS action', () => {
-    const dataMock = {setNewTitle: 'Name of party is: Lalaland'};
+  it('should return a GET_TITLE_SUCCESS action', (done) => {
+    const dataMock = {title: 'Name of party is: Lalaland'};
     const expectedResult = {
       type: TodoActions.GET_TITLE_SUCCESS,
       payload: dataMock
@@ -55,15 +61,17 @@ describe('Effects.', () => {
 
     effect.getTitle$.subscribe(data => {
       expect(data).toEqual(expectedResult);
+      done();
     });
   });
 
   it('should return a GET_TITLE_ERROR action', (done) => {
     const expectedResult = {
-      type: TodoActions.GET_TITLE_ERROR
+      type: TodoActions.GET_TITLE_ERROR,
+      payload: new Error()
     };
 
-    spyOn(appService, 'showTitle').and.returnValue(Observable.throw('Error'));
+    spyOn(appService, 'showTitle').and.returnValue(Observable.throw(new Error()));
 
     runner.queue(todoActions.getTitle());
 
@@ -74,10 +82,10 @@ describe('Effects.', () => {
   });
 
   it('should return a SET_NEW_TITLE_SUCCESS action', (done) => {
-    const dataMock = {setNewTitle: 'Name of party is: Lalaland'};
+    const dataMock = {title: 'Name of party is: Lalaland'};
     const expectedResult = {
       type: TodoActions.SET_NEW_TITLE_SUCCESS,
-      payload: {setNewTitle: 'Name of party is: Lalaland'}
+      payload: {title: 'Name of party is: Lalaland'}
     };
 
     spyOn(appService, 'setTitle').and.returnValue(Observable.of(dataMock));
@@ -92,10 +100,11 @@ describe('Effects.', () => {
 
   it('should return a SET_NEW_TITLE_ERROR action', (done) => {
     const expectedResult = {
-      type: TodoActions.SET_NEW_TITLE_ERROR
+      type: TodoActions.SET_NEW_TITLE_ERROR,
+      payload: new Error()
     };
 
-    spyOn(appService, 'setTitle').and.returnValue(Observable.throw('Error'));
+    spyOn(appService, 'setTitle').and.returnValue(Observable.throw(new Error()));
 
     runner.queue(todoActions.setTitle(''));
 
@@ -106,28 +115,28 @@ describe('Effects.', () => {
   });
 
   it('should return a GET_GUESTS_SUCCESS action', (done) => {
-    const dataMock = {setNewTitle: 'Name of party is: Lalaland'};
     const expectedResult = {
       type: TodoActions.GET_GUESTS_SUCCESS,
-      payload: {setNewTitle: 'Name of party is: Lalaland'}
+      payload: newGuestMock
     };
 
-    spyOn(guestService, 'getGuests').and.returnValue(Observable.of(dataMock));
+    spyOn(guestService, 'getGuests').and.returnValue(Observable.of([newGuestMock]));
 
     runner.queue(todoActions.getGuests());
 
     effect.getGuests$.subscribe(data => {
-      expect(data).toEqual(expectedResult);
+      expect(data.payload).toEqual([expectedResult.payload]);
       done();
     });
   });
 
   it('should return a GET_GUESTS_ERROR action', (done) => {
     const expectedResult = {
-      type: TodoActions.GET_GUESTS_ERROR
+      type: TodoActions.GET_GUESTS_ERROR,
+      payload: new Error()
     };
 
-    spyOn(guestService, 'getGuests').and.returnValue(Observable.throw('Error'));
+    spyOn(guestService, 'getGuests').and.returnValue(Observable.throw(new Error()));
 
     runner.queue(todoActions.getGuests());
 
@@ -138,20 +147,12 @@ describe('Effects.', () => {
   });
 
   it('should return a ADD_NEW_GUEST_SUCCESS action', (done) => {
-    const newGuestMock = new NewGuest({
-      name: 'John Doe',
-      phone: '911',
-      gender: 'male',
-      drunker: true,
-      canBeRemoved: true
-    });
-    const dataMock = {setNewTitle: 'Name of party is: Lalaland'};
     const expectedResult = {
       type: TodoActions.ADD_NEW_GUEST_SUCCESS,
-      payload: {setNewTitle: 'Name of party is: Lalaland'}
+      payload: newGuestMock
     };
 
-    spyOn(guestService, 'addNewGuest').and.returnValue(Observable.of(dataMock));
+    spyOn(guestService, 'addNewGuest').and.returnValue(Observable.of(newGuestMock));
 
     runner.queue(todoActions.addNewGuest(newGuestMock));
 
@@ -162,18 +163,12 @@ describe('Effects.', () => {
   });
 
   it('should return a ADD_NEW_GUEST_ERROR action', (done) => {
-    const newGuestMock = new NewGuest({
-      name: 'John Doe',
-      phone: '911',
-      gender: 'male',
-      drunker: true,
-      canBeRemoved: true
-    });
     const expectedResult = {
-      type: TodoActions.ADD_NEW_GUEST_ERROR
+      type: TodoActions.ADD_NEW_GUEST_ERROR,
+      payload: new Error()
     };
 
-    spyOn(guestService, 'addNewGuest').and.returnValue(Observable.throw('Error'));
+    spyOn(guestService, 'addNewGuest').and.returnValue(Observable.throw(new Error()));
 
     runner.queue(todoActions.addNewGuest(newGuestMock));
 
@@ -184,20 +179,12 @@ describe('Effects.', () => {
   });
 
   it('should return a REMOVE_GUEST_SUCCESS action', (done) => {
-    const newGuestMock = new NewGuest({
-      name: 'John Doe',
-      phone: '911',
-      gender: 'male',
-      drunker: true,
-      canBeRemoved: true
-    });
-    const dataMock = {setNewTitle: 'Name of party is: Lalaland'};
     const expectedResult = {
       type: TodoActions.REMOVE_GUEST_SUCCESS,
-      payload: {setNewTitle: 'Name of party is: Lalaland'}
+      payload: newGuestMock
     };
 
-    spyOn(guestService, 'removeGuest').and.returnValue(Observable.of(dataMock));
+    spyOn(guestService, 'removeGuest').and.returnValue(Observable.of(newGuestMock));
 
     runner.queue(todoActions.removeGuest(newGuestMock));
 
@@ -208,18 +195,12 @@ describe('Effects.', () => {
   });
 
   it('should return a REMOVE_GUEST_ERROR action', (done) => {
-    const newGuestMock = new NewGuest({
-      name: 'John Doe',
-      phone: '911',
-      gender: 'male',
-      drunker: true,
-      canBeRemoved: true
-    });
     const expectedResult = {
-      type: TodoActions.REMOVE_GUEST_ERROR
+      type: TodoActions.REMOVE_GUEST_ERROR,
+      payload: new Error()
     };
 
-    spyOn(guestService, 'removeGuest').and.returnValue(Observable.throw('Error'));
+    spyOn(guestService, 'removeGuest').and.returnValue(Observable.throw(new Error()));
 
     runner.queue(todoActions.removeGuest(newGuestMock));
 

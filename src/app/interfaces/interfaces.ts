@@ -6,27 +6,14 @@ export interface Guest {
   canBeRemoved?: boolean;
 }
 
-export interface GuestData {
-  payload: {
-    addNewGuest?: Guest,
-    removeGuest?: Guest
-  };
-  type: string;
-}
-
-export interface PartyTitle {
-  payload: {
-    setNewTitle: string;
-  },
-  type: string;
-}
-
 export interface ResponseApp {
+  title?: string;
+  guest?: Guest;
   guests?: Guest[];
-  setNewTitle?: string;
-  addNewGuest?: Guest;
-  removeGuest?: Guest;
-  type: string;
   pending?: boolean;
   error?: string;
+}
+
+export interface Title {
+  title: string;
 }

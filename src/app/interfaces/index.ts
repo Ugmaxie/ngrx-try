@@ -1,1 +1,1 @@
-export { Guest, GuestData, PartyTitle, ResponseApp } from './interfaces';
+export { Guest, ResponseApp } from './interfaces';

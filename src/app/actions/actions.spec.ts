@@ -4,6 +4,13 @@ import { TodoActions } from './actions';
 
 describe('Actions.', () => {
   let todoActions;
+  const newGuestMock = {
+    name: 'John Doe',
+    phone: '911',
+    gender: 'male',
+    drunker: true,
+    canBeRemoved: true
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -18,7 +25,7 @@ describe('Actions.', () => {
   it('should return action to get default title', () => {
     const expectedAction = {
       type: 'GET_TITLE',
-      payload: {setNewTitle: 'My new Party'}
+      payload: {title: 'My new Party'}
     };
 
     const action = todoActions.getTitle();
@@ -29,7 +36,7 @@ describe('Actions.', () => {
   it('should return action to set new title', () => {
     const expectedAction = {
       type: 'SET_NEW_TITLE',
-      payload: {setNewTitle: 'SET THE NEWEST PARTY'}
+      payload: {title: 'SET THE NEWEST PARTY'}
     };
 
     const action = todoActions.setTitle('SET THE NEWEST PARTY');
@@ -48,17 +55,10 @@ describe('Actions.', () => {
   });
 
   it('should return action to add new guest', () => {
-    const newGuestMock = {
-      name: 'John Doe',
-      phone: '911',
-      gender: 'male',
-      drunker: true,
-      canBeRemoved: true
-    };
     const expectedAction = {
       type: 'ADD_NEW_GUEST',
       payload: {
-        addNewGuest: {
+        guest: {
           name: 'John Doe',
           phone: '911',
           gender: 'male',
@@ -74,17 +74,10 @@ describe('Actions.', () => {
   });
 
   it('should return action to remove invited guest', () => {
-    const newGuestMock = {
-      name: 'John Doe',
-      phone: '911',
-      gender: 'male',
-      drunker: true,
-      canBeRemoved: true
-    };
     const expectedAction = {
       type: 'REMOVE_GUEST',
       payload: {
-        removeGuest: {
+        guest: {
           name: 'John Doe',
           phone: '911',
           gender: 'male',

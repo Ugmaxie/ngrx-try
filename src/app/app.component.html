@@ -13,19 +13,19 @@
     <div class="guest-data">
       <div class="guest-data__container">
         <label for="guestName">Guest Name</label>
-        <input id="guestName" type="text" placeholder="Guest name" #person [(ngModel)]="addNewGuestData.name">
+        <input id="guestName" type="text" placeholder="Guest name" [(ngModel)]="addNewGuestData.name">
       </div>
 
       <div class="guest-data__container">
         <label for="guestPhone">Guest Phone</label>
-        <input id="guestPhone" type="text" placeholder="Guest phone number" #phone [(ngModel)]="addNewGuestData.phone">
+        <input id="guestPhone" type="text" placeholder="Guest phone number" [(ngModel)]="addNewGuestData.phone">
       </div>
     </div>
 
     <div class="guest-data">
       <div class="guest-data__container">
         <label for="guestGender">Guest Gender</label>
-        <select id="guestGender" name="Gender" #gender [(ngModel)]="addNewGuestData.gender">
+        <select id="guestGender" name="Gender" [(ngModel)]="addNewGuestData.gender">
           <option value="male">Male</option>
           <option value="female">Female</option>
           <option value="other">Other</option>
@@ -34,13 +34,13 @@
 
       <div class="guest-data__container">
         <label for="guestDrunker">Drunker</label>
-        <input id="guestDrunker" type="checkbox" #drunker [(ngModel)]="addNewGuestData.drunker">
+        <input id="guestDrunker" type="checkbox" [(ngModel)]="addNewGuestData.drunker">
       </div>
     </div>
   </div>
 
   <div class="add-person-button">
-    <button (click)="addPerson(person.value, phone.value, gender.value, drunker.checked)">Add person</button>
+    <button (click)="addPerson(addNewGuestData)">Add person</button>
   </div>
 </div>
 

@@ -16,46 +16,47 @@ import 'rxjs/add/observable/timer';
 export class ProfileEffects {
   constructor(private actions$: Actions,
               private appService: AppService,
-              private guestService: GuestService) {
+              private guestService: GuestService,
+              private todoActions: TodoActions) {
   }
 
   @Effect() getTitle$ = this.actions$
     .ofType(TodoActions.GET_TITLE)
     .switchMap(action =>
-      this.appService.showTitle(action)
-        .map(res => ({type: TodoActions.GET_TITLE_SUCCESS, payload: res}))
-        .catch(() => Observable.of({type: TodoActions.GET_TITLE_ERROR}))
+      this.appService.showTitle(action.payload)
+        .map(res => this.todoActions.getTitleSuccess(res))
+        .catch((error: Error) => Observable.of(this.todoActions.getTitleError(error)))
     );
 
   @Effect() setTitle$ = this.actions$
     .ofType(TodoActions.SET_NEW_TITLE)
     .switchMap(action =>
-      this.appService.setTitle(action)
-        .map(res => ({type: TodoActions.SET_NEW_TITLE_SUCCESS, payload: res}))
-        .catch(() => Observable.of({type: TodoActions.SET_NEW_TITLE_ERROR}))
+      this.appService.setTitle(action.payload)
+        .map(res => this.todoActions.setTitleSuccess(res))
+        .catch((error: Error) => Observable.of(this.todoActions.setTitleError(error)))
     );
 
   @Effect() getGuests$ = this.actions$
     .ofType(TodoActions.GET_GUESTS)
     .switchMap(action =>
       this.guestService.getGuests()
-        .map(res => ({type: TodoActions.GET_GUESTS_SUCCESS, payload: res}))
-        .catch(() => Observable.of({type: TodoActions.GET_GUESTS_ERROR}))
+        .map(res => this.todoActions.getGuestsSuccess(res))
+        .catch((error: Error) => Observable.of(this.todoActions.getGuestsError(error)))
     );
 
   @Effect() addNewGuest$ = this.actions$
     .ofType(TodoActions.ADD_NEW_GUEST)
     .switchMap(action =>
       this.guestService.addNewGuest(action)
-        .map(res => ({type: TodoActions.ADD_NEW_GUEST_SUCCESS, payload: res}))
-        .catch(() => Observable.of({type: TodoActions.ADD_NEW_GUEST_ERROR}))
+        .map(res => this.todoActions.addNewGuestSuccess(res))
+        .catch((error: Error) => Observable.of(this.todoActions.addNewGuestError(error)))
     );
 
   @Effect() removeGuest$ = this.actions$
     .ofType(TodoActions.REMOVE_GUEST)
     .switchMap(action =>
       this.guestService.removeGuest(action)
-        .map(res => ({type: TodoActions.REMOVE_GUEST_SUCCESS, payload: res}))
-        .catch(() => Observable.of({type: TodoActions.REMOVE_GUEST_ERROR}))
+        .map(res => this.todoActions.removeGuestSuccess(res))
+        .catch((error: Error) => Observable.of(this.todoActions.removeGuestError(error)))
     );
 }

@@ -38,7 +38,7 @@ describe('AppComponent', () => {
 
   it('should check ngOnInit with title res.type', () => {
     spyOn(context.store, 'select').and
-      .returnValue(Observable.from([{type: 'title', setNewTitle: 'Name of party is: Any party.'}]));
+      .returnValue(Observable.from([{title: 'Name of party is: Any party.'}]));
     spyOn(context, 'resetTitle').and.stub();
 
     context.ngOnInit();
@@ -56,7 +56,7 @@ describe('AppComponent', () => {
 
   it('should check ngOnInit with SET_NEW_TITLE res.type', () => {
     spyOn(context.store, 'select').and
-      .returnValue(Observable.from([{type: 'SET_NEW_TITLE', setNewTitle: 'Name of party is: Any party.'}]));
+      .returnValue(Observable.from([{title: 'Name of party is: Any party.'}]));
     spyOn(context, 'resetTitle').and.stub();
 
     context.ngOnInit();
@@ -74,8 +74,7 @@ describe('AppComponent', () => {
 
   it('should check ngOnInit with USER res.type', () => {
     spyOn(context.store, 'select').and
-      .returnValue(Observable.from([{
-        type: 'user', guests: [{
+      .returnValue(Observable.from([{guests: [{
           name: 'Rita',
           phone: '03',
           gender: 'female',
@@ -132,7 +131,7 @@ describe('AppComponent', () => {
 
     spyOn(context.store, 'dispatch').and.stub();
 
-    context.addPerson(guestDataMock.name, guestDataMock.phone, guestDataMock.gender, guestDataMock.drunker);
+    context.addPerson(guestDataMock);
 
     expect(context.store.dispatch).toHaveBeenCalledTimes(2);
     expect(context.addNewGuestData).toEqual(addNewGuestDataMock);

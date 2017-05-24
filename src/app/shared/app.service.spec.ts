@@ -16,12 +16,7 @@ describe('App Service', () => {
 
   it('should get the party title', fakeAsync(() => {
     const timer = 1000;
-    const mockData = {
-      payload: {
-        setNewTitle: 'Just get the title'
-      },
-      type: 'GET_TITLE'
-    };
+    const mockData = { title: 'Just get the title' };
     let result;
 
     service.showTitle(mockData).subscribe(data => {
@@ -30,17 +25,12 @@ describe('App Service', () => {
 
     tick(timer);
 
-    expect(result.setNewTitle).toEqual('Name of party is: Just get the title');
+    expect(result.title).toEqual('Name of party is: Just get the title');
   }));
 
   it('should set the party title', fakeAsync(() => {
     const timer = 1000;
-    const mockData = {
-      payload: {
-        setNewTitle: 'Just get the title'
-      },
-      type: 'SET_NEW_TITLE'
-    };
+    const mockData = { title: 'Just get the title' };
     let result;
 
     service.setTitle(mockData).subscribe(data => {
@@ -49,6 +39,6 @@ describe('App Service', () => {
 
     tick(timer);
 
-    expect(result.setNewTitle).toEqual('Name of party is: Just get the title');
+    expect(result.title).toEqual('Name of party is: Just get the title');
   }));
 });
