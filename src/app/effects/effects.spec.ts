@@ -149,7 +149,7 @@ describe('Effects.', () => {
   it('should return a ADD_NEW_GUEST_SUCCESS action', (done) => {
     const expectedResult = {
       type: TodoActions.ADD_NEW_GUEST_SUCCESS,
-      payload: newGuestMock
+      payload: {guest: newGuestMock}
     };
 
     spyOn(guestService, 'addNewGuest').and.returnValue(Observable.of(newGuestMock));
@@ -181,7 +181,7 @@ describe('Effects.', () => {
   it('should return a REMOVE_GUEST_SUCCESS action', (done) => {
     const expectedResult = {
       type: TodoActions.REMOVE_GUEST_SUCCESS,
-      payload: newGuestMock
+      payload: {guest: newGuestMock}
     };
 
     spyOn(guestService, 'removeGuest').and.returnValue(Observable.of(newGuestMock));

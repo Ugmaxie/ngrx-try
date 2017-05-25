@@ -11,6 +11,8 @@ import { AppService, GuestService } from './shared';
 import { ProfileEffects } from './effects';
 import { TodoActions } from './actions';
 
+export interface AppState {myWildReducer}
+
 @NgModule({
   declarations: [
     AppComponent

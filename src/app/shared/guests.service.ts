@@ -1,6 +1,8 @@
 import { Observable } from 'rxjs/Observable';
-import { Action } from '@ngrx/store';
+
 import 'rxjs/add/operator/mapTo';
+
+import { ResponseApp } from '../interfaces';
 
 export class GuestService {
   public guests = [{name: 'Max', gender: 'male', phone: '+380665898925', drunker: true}];
@@ -9,14 +11,14 @@ export class GuestService {
     return Observable.timer(500).mapTo({guests: this.guests});
   }
 
-  public addNewGuest(data: Action): Observable<any> {
-    this.guests.push(data.payload.guest);
-    return Observable.timer(500).mapTo({guest: data.payload.guest});
+  public addNewGuest(params: ResponseApp): Observable<any> {
+    this.guests.push(params.guest);
+    return Observable.timer(500).mapTo({guest: params.guest});
   }
 
-  public removeGuest(data: Action): Observable<any> {
-    const index = this.guests.indexOf(data.payload.guest);
+  public removeGuest(params: ResponseApp): Observable<any> {
+    const index = this.guests.indexOf(params.guest);
     this.guests.splice(index, 1);
-    return Observable.timer(500).mapTo({guest: data.payload.guest});
+    return Observable.timer(500).mapTo({guest: params.guest});
   }
 }

@@ -3,14 +3,16 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
-import { AppService, GuestService } from '../shared';
-import { TodoActions } from '../actions/actions';
+import {Action} from '@ngrx/store';
 
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/timer';
+
+import { AppService, GuestService } from '../shared';
+import { TodoActions } from '../actions/actions';
 
 @Injectable()
 export class ProfileEffects {
@@ -22,7 +24,7 @@ export class ProfileEffects {
 
   @Effect() getTitle$ = this.actions$
     .ofType(TodoActions.GET_TITLE)
-    .switchMap(action =>
+    .switchMap((action: Action) =>
       this.appService.showTitle(action.payload)
         .map(res => this.todoActions.getTitleSuccess(res))
         .catch((error: Error) => Observable.of(this.todoActions.getTitleError(error)))
@@ -30,7 +32,7 @@ export class ProfileEffects {
 
   @Effect() setTitle$ = this.actions$
     .ofType(TodoActions.SET_NEW_TITLE)
-    .switchMap(action =>
+    .switchMap((action: Action) =>
       this.appService.setTitle(action.payload)
         .map(res => this.todoActions.setTitleSuccess(res))
         .catch((error: Error) => Observable.of(this.todoActions.setTitleError(error)))
@@ -38,7 +40,7 @@ export class ProfileEffects {
 
   @Effect() getGuests$ = this.actions$
     .ofType(TodoActions.GET_GUESTS)
-    .switchMap(action =>
+    .switchMap((action: Action) =>
       this.guestService.getGuests()
         .map(res => this.todoActions.getGuestsSuccess(res))
         .catch((error: Error) => Observable.of(this.todoActions.getGuestsError(error)))
@@ -46,16 +48,16 @@ export class ProfileEffects {
 
   @Effect() addNewGuest$ = this.actions$
     .ofType(TodoActions.ADD_NEW_GUEST)
-    .switchMap(action =>
-      this.guestService.addNewGuest(action)
+    .switchMap((action: Action) =>
+      this.guestService.addNewGuest(action.payload)
         .map(res => this.todoActions.addNewGuestSuccess(res))
         .catch((error: Error) => Observable.of(this.todoActions.addNewGuestError(error)))
     );
 
   @Effect() removeGuest$ = this.actions$
     .ofType(TodoActions.REMOVE_GUEST)
-    .switchMap(action =>
-      this.guestService.removeGuest(action)
+    .switchMap((action: Action) =>
+      this.guestService.removeGuest(action.payload)
         .map(res => this.todoActions.removeGuestSuccess(res))
         .catch((error: Error) => Observable.of(this.todoActions.removeGuestError(error)))
     );

@@ -32,9 +32,7 @@ describe('Guest Service', () => {
   it('should add new guest to list', fakeAsync(() => {
     const timer = 1000;
     const newGuestMock = {
-      payload: {
-        guest: guestMock
-      },
+      guest: guestMock,
       type: 'ADD_USER_SUCCESS'
     };
     let result;
@@ -49,13 +47,11 @@ describe('Guest Service', () => {
     expect(service.guests).toContain(guestMock);
   }));
 
-  it('should remove a guest to list', fakeAsync(() => {
+  it('should remove a guest from list', fakeAsync(() => {
     const timer = 1000;
     const expectedResult = [];
     const removeGuestMock = {
-      payload: {
-        guest: guestMock
-      },
+      guest: guestMock,
       type: 'REMOVE_USER_SUCCESS'
     };
     let result;

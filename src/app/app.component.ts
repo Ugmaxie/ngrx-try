@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import {Component, OnInit} from '@angular/core';
+import {Store} from '@ngrx/store';
 
-import { TodoActions } from './actions';
-import { Guest, ResponseApp } from './interfaces';
+import {TodoActions} from './actions';
+import {Guest, ResponseApp} from './interfaces';
+import {AppState} from './app.module';
 
 @Component({
   selector: 'app-root',
@@ -15,26 +16,26 @@ export class AppComponent implements OnInit {
   public pageTitle: string;
   public totalGuests: Guest[];
   public addNewGuestData: Guest;
-  public store: Store<{}>;
+  private emptyGuestData = {name: '', phone: '', gender: 'male', drunker: false, canBeRemoved: true};
 
-  public constructor(store: Store<{}>,
+  public constructor(private store: Store<AppState>,
                      private todoActions: TodoActions) {
-    this.store = store;
+    this.totalGuests = [];
   };
 
   public ngOnInit(): void {
-    this.addNewGuestData = {name: '', phone: '', gender: 'male', drunker: false, canBeRemoved: true};
-    this.totalGuests = [];
+    this.addNewGuestData = this.emptyGuestData;
 
-    this.store.select('myWildReducer').subscribe((res: ResponseApp): void => {
-      if (res.title) {
-        this.title = res.title;
-      }
+    this.store.select('myWildReducer')
+      .subscribe((res: ResponseApp): void => {
+        if (res.title) {
+          this.title = res.title;
+        }
 
-      if (res.guests) {
-        this.totalGuests = res.guests;
-      }
-    });
+        if (res.guests) {
+          this.totalGuests = res.guests;
+        }
+      });
 
     this.resetTitle();
   }

@@ -62,23 +62,27 @@
 	margin-top: 10px;
 }
 
-.guests-remover {
+.added-guests {
+  min-height: 60px;
+}
+
+.added-guests__guests-remover {
 	display: inline-flex;
 	flex-direction: row;
 }
 
-.guests-remover__added-guest {
+.added-guests__guests-remover__added-guest {
 	display: inline-flex;
 	border: 1px solid #000;
 	border-radius: 7px;
 	margin-right: 10px;
 }
 
-.guests-remover__guest-name {
+.added-guests__guests-remover__guest-name {
 	padding: 5px;
 }
 
-.guests-remover__remove-button {
+.added-guests__guests-remover__remove-button {
 	display: inline-flex;
 	border-left: 1px solid #000;
 	border-radius: 0 7px 7px 0;
@@ -86,6 +90,6 @@
 	cursor: pointer;
 }
 
-.guests-remover__remove-button:hover {
+.added-guests__guests-remover__remove-button:hover {
 	background-color: #e0e0e0;
 }

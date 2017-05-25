@@ -45,16 +45,18 @@
 </div>
 
 <div>
-  <div class="field-label">Added guests:</div>
-  <div class="guests-remover" *ngFor="let addedGuest of totalGuests">
-    <div class="guests-remover__added-guest" *ngIf="addedGuest?.canBeRemoved">
-      <span class="guests-remover__guest-name">{{addedGuest?.name}}</span>
-      <div class="guests-remover__remove-button" (click)="removePerson(addedGuest)">X</div>
+  <div class="added-guests">
+    <div class="field-label">Added guests:</div>
+    <div class="added-guests__guests-remover" *ngFor="let addedGuest of totalGuests">
+      <div class="added-guests__guests-remover__added-guest" *ngIf="addedGuest?.canBeRemoved">
+        <span class="added-guests__guests-remover__guest-name">{{addedGuest?.name}}</span>
+        <div class="added-guests__guests-remover__remove-button" (click)="removePerson(addedGuest)">X</div>
+      </div>
     </div>
   </div>
 
   <div>
-    <div class="field-label">Guests: ({{totalGuests?.length}})</div>
+    <div class="field-label">Guests: ({{totalGuests.length}})</div>
     <div class="guest" *ngFor="let guest of totalGuests">
       <div class="guest__name">Name: {{guest.name}}</div>
       <div class="guest__phone">Phone: {{guest.phone}}</div>

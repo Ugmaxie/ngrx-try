@@ -1,17 +1,26 @@
-import { myWildReducer } from './reducer';
+import {myWildReducer, TodoState} from './reducer';
 
 describe('Reducer.', () => {
+  const oldState = new TodoState();
+  const guestMock = {
+    name: 'Vasya',
+    phone: '911',
+    gender: 'male',
+    drunker: true,
+    canBeRemoved: true
+  };
+
   it('should send request to get title and return new state', () => {
-    const oldState = {};
-    const newState = myWildReducer(oldState, {type: 'GET_TITLE'});
+    const newState = myWildReducer(oldState, {
+      type: '[Party Name] Get Title'
+    });
 
     expect(newState.pending).toEqual(true);
   });
 
   it('should send request for getting title, got success and return new state', () => {
-    const oldState = {};
     const newState = myWildReducer(oldState, {
-      type: 'GET_TITLE_SUCCESS',
+      type: '[Party Name] Get Title Success',
       payload: {title: 'GET TITLE'}
     });
 
@@ -20,25 +29,27 @@ describe('Reducer.', () => {
   });
 
   it('should send request to get title and got Error', () => {
-    const oldState = {};
-    const newState = myWildReducer(oldState, {type: 'GET_TITLE_ERROR'});
+    const newState = myWildReducer(oldState, {
+      type: '[Party Name] Get Title Error',
+      payload: new Error('Error of Errors!')
+    });
 
     expect(newState.pending).toEqual(false);
-    expect(newState.error).toEqual('Title cannot be delivered');
+    expect(newState.error).toEqual(new Error('Error of Errors!'));
   });
 
   it('should send request to set new title and return new state', () => {
-    const oldState = {};
-    const newState = myWildReducer(oldState, {type: 'SET_NEW_TITLE'});
+    const newState = myWildReducer(oldState, {
+      type: '[Party Name] Set New Title'
+    });
 
     expect(newState.pending).toEqual(true);
     expect(newState.title).toBeUndefined();
   });
 
   it('should send request for set new title, got Success and return new state', () => {
-    const oldState = {};
     const newState = myWildReducer(oldState, {
-      type: 'SET_NEW_TITLE_SUCCESS',
+      type: '[Party Name] Set New Title Success',
       payload: {title: 'SET NEWEST TITLE'}
     });
 
@@ -47,90 +58,97 @@ describe('Reducer.', () => {
   });
 
   it('should send request to set new title and got Error', () => {
-    const oldState = {};
-    const newState = myWildReducer(oldState, {type: 'SET_NEW_TITLE_ERROR'});
+    const newState = myWildReducer(oldState, {
+      type: '[Party Name] Set New Title Error',
+      payload: new Error('Error of Errors!')
+    });
 
     expect(newState.pending).toEqual(false);
-    expect(newState.error).toEqual('Title cannot be delivered');
+    expect(newState.error).toEqual(new Error('Error of Errors!'));
   });
 
   it('should send request to add new guest and return new state', () => {
-    const oldState = {};
-    const newState = myWildReducer(oldState, {type: 'ADD_NEW_GUEST'});
+    const newState = myWildReducer(oldState, {
+      type: '[Guest] Add New Guest'
+    });
 
     expect(newState.pending).toEqual(true);
     expect(newState.title).toBeUndefined();
   });
 
   it('should send request for add new guest, got Success and return new state', () => {
-    const oldState = {};
     const newState = myWildReducer(oldState, {
-      type: 'ADD_NEW_GUEST_SUCCESS',
-      payload: {guest: 'Vasya'}
+      type: '[Guest] Add New Guest Success',
+      payload: { guest: guestMock }
     });
 
     expect(newState.pending).toEqual(false);
-    expect(newState.guest).toEqual('Vasya');
+    expect(newState.guest).toEqual(guestMock);
   });
 
   it('should send request to add new guest and got Error', () => {
-    const oldState = {};
-    const newState = myWildReducer(oldState, {type: 'ADD_NEW_GUEST_ERROR'});
+    const newState = myWildReducer(oldState, {
+      type: '[Guest] Add New Guest Error',
+      payload: new Error('Error of Errors!')
+    });
 
     expect(newState.pending).toEqual(false);
-    expect(newState.error).toEqual('User data cannot be delivered');
+    expect(newState.error).toEqual(new Error('Error of Errors!'));
   });
 
   it('should send request to remove guest and return new state', () => {
-    const oldState = {};
-    const newState = myWildReducer(oldState, {type: 'REMOVE_GUEST'});
+    const newState = myWildReducer(oldState, {
+      type: '[Guest] Remove Guest'
+    });
 
     expect(newState.pending).toEqual(true);
     expect(newState.guest).toBeUndefined();
   });
 
   it('should send request for removing guest, got Success and return new state', () => {
-    const oldState = {};
     const newState = myWildReducer(oldState, {
-      type: 'REMOVE_GUEST_SUCCESS',
-      payload: {guest: 'Vasya'}
+      type: '[Guest] Remove Guest Success',
+      payload: {guest: guestMock}
     });
 
     expect(newState.pending).toEqual(false);
-    expect(newState.guest).toEqual('Vasya');
+    expect(newState.guest).toEqual(guestMock);
   });
 
   it('should send request to remove guest and got Error', () => {
-    const oldState = {};
-    const newState = myWildReducer(oldState, {type: 'REMOVE_GUEST_ERROR'});
+    const newState = myWildReducer(oldState, {
+      type: '[Guest] Remove Guest Error',
+      payload: new Error('Error of Errors!')
+    });
 
     expect(newState.pending).toEqual(false);
-    expect(newState.error).toEqual('Data loss. Try again.');
+    expect(newState.error).toEqual(new Error('Error of Errors!'));
   });
 
   it('should send request to get guests and return new state', () => {
-    const oldState = {};
-    const newState = myWildReducer(oldState, {type: 'GET_GUESTS'});
+    const newState = myWildReducer(oldState, {type: '[Guests] Get Guests'});
 
     expect(newState.pending).toEqual(true);
     expect(newState.guests).toBeUndefined();
   });
 
   it('should send request for getting guests, got Success and return new state', () => {
-    const oldState = {};
     const newState = myWildReducer(oldState, {
-      type: 'GET_GUESTS_SUCCESS', payload: {guests: [1, 2]}
+      type: '[Guests] Get Guests Success',
+      payload: {guests: [guestMock]}
     });
 
     expect(newState.pending).toEqual(false);
-    expect(newState.guests).toEqual([1, 2]);
+    expect(newState.guests).toEqual([guestMock]);
   });
 
   it('should send request to remove guest and got Error', () => {
-    const oldState = {};
-    const newState = myWildReducer(oldState, {type: 'GET_GUESTS_ERROR'});
+    const newState = myWildReducer(oldState, {
+      type: '[Guests] Get Guests Error',
+      payload: new Error('Error of Errors!')
+    });
 
     expect(newState.pending).toEqual(false);
-    expect(newState.error).toEqual('User data cannot be delivered');
+    expect(newState.error).toEqual(new Error('Error of Errors!'));
   });
 });

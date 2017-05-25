@@ -24,7 +24,7 @@ describe('Actions.', () => {
 
   it('should return action to get default title', () => {
     const expectedAction = {
-      type: 'GET_TITLE',
+      type: '[Party Name] Get Title',
       payload: {title: 'My new Party'}
     };
 
@@ -35,7 +35,7 @@ describe('Actions.', () => {
 
   it('should return action to set new title', () => {
     const expectedAction = {
-      type: 'SET_NEW_TITLE',
+      type: '[Party Name] Set New Title',
       payload: {title: 'SET THE NEWEST PARTY'}
     };
 
@@ -46,7 +46,7 @@ describe('Actions.', () => {
 
   it('should return action to get guests from DB', () => {
     const expectedAction = {
-      type: 'GET_GUESTS'
+      type: '[Guests] Get Guests'
     };
 
     const action = todoActions.getGuests();
@@ -56,7 +56,7 @@ describe('Actions.', () => {
 
   it('should return action to add new guest', () => {
     const expectedAction = {
-      type: 'ADD_NEW_GUEST',
+      type: '[Guest] Add New Guest',
       payload: {
         guest: {
           name: 'John Doe',
@@ -75,7 +75,7 @@ describe('Actions.', () => {
 
   it('should return action to remove invited guest', () => {
     const expectedAction = {
-      type: 'REMOVE_GUEST',
+      type: '[Guest] Remove Guest',
       payload: {
         guest: {
           name: 'John Doe',
