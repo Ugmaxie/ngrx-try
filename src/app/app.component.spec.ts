@@ -1,32 +1,147 @@
 import { TestBed, async } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+
+import 'rxjs/add/observable/from';
 
 import { AppComponent } from './app.component';
+import { myWildReducer } from './reducers/reducer';
+import { TodoActions } from './actions';
 
 describe('AppComponent', () => {
+  const addNewGuestDataMock = {name: '', phone: '', gender: 'male', drunker: false, canBeRemoved: true};
+  let context: AppComponent;
+  let fixture;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent
       ],
+      imports: [
+        FormsModule,
+        StoreModule.provideStore(myWildReducer)
+      ],
+      providers: [
+        TodoActions
+      ]
     }).compileComponents();
+
+    fixture = TestBed.createComponent(AppComponent);
+    context = fixture.debugElement.componentInstance;
   }));
 
   it('should create the app', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
+    expect(context).toBeTruthy();
   }));
 
-  it(`should have as title 'app works!'`, async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('app works!');
-  }));
+  it('should check ngOnInit with title res.type', () => {
+    spyOn(context.store, 'select').and
+      .returnValue(Observable.from([{title: 'Name of party is: Any party.'}]));
+    spyOn(context, 'resetTitle').and.stub();
 
-  it('should render title in a h1 tag', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('app works!');
-  }));
+    context.ngOnInit();
+
+    jasmine.clock().install();
+    jasmine.clock().tick(1000);
+
+    expect(context.addNewGuestData).toEqual(addNewGuestDataMock);
+    expect(context.title).toContain('Name of party is:');
+    expect(context.totalGuests).toEqual([]);
+    expect(context.resetTitle).toHaveBeenCalled();
+
+    jasmine.clock().uninstall();
+  });
+
+  it('should check ngOnInit with SET_NEW_TITLE res.type', () => {
+    spyOn(context.store, 'select').and
+      .returnValue(Observable.from([{title: 'Name of party is: Any party.'}]));
+    spyOn(context, 'resetTitle').and.stub();
+
+    context.ngOnInit();
+
+    jasmine.clock().install();
+    jasmine.clock().tick(1000);
+
+    expect(context.addNewGuestData).toEqual(addNewGuestDataMock);
+    expect(context.title).toContain('Name of party is:');
+    expect(context.totalGuests).toEqual([]);
+    expect(context.resetTitle).toHaveBeenCalled();
+
+    jasmine.clock().uninstall();
+  });
+
+  it('should check ngOnInit with USER res.type', () => {
+    spyOn(context.store, 'select').and
+      .returnValue(Observable.from([{guests: [{
+          name: 'Rita',
+          phone: '03',
+          gender: 'female',
+          drunker: true,
+          canBeRemoved: true
+        }]
+      }]));
+    spyOn(context, 'resetTitle').and.stub();
+
+    context.ngOnInit();
+
+    jasmine.clock().install();
+    jasmine.clock().tick(1000);
+
+    expect(context.addNewGuestData).toEqual(addNewGuestDataMock);
+    expect(context.title).toBeUndefined();
+    expect(context.totalGuests).toEqual([{
+      name: 'Rita',
+      phone: '03',
+      gender: 'female',
+      drunker: true,
+      canBeRemoved: true
+    }]);
+    expect(context.resetTitle).toHaveBeenCalled();
+
+    jasmine.clock().uninstall();
+  });
+
+  it('should check resetTitle', () => {
+    spyOn(context.store, 'dispatch').and.stub();
+
+    context.resetTitle();
+
+    expect(context.store.dispatch).toHaveBeenCalledTimes(2);
+  });
+
+  it('should check setNewTitle', () => {
+    const setNewTitleMock = 'any title';
+    spyOn(context.store, 'dispatch').and.stub();
+
+    context.setNewTitle(setNewTitleMock);
+
+    expect(context.store.dispatch).toHaveBeenCalledTimes(1);
+    expect(context.pageTitle).toEqual('');
+  });
+
+  it('should check addPerson', () => {
+    const guestDataMock = {
+      name: 'guestName',
+      phone: 'guestPhone',
+      gender: 'male',
+      drunker: true
+    };
+
+    spyOn(context.store, 'dispatch').and.stub();
+
+    context.addPerson(guestDataMock);
+
+    expect(context.store.dispatch).toHaveBeenCalledTimes(2);
+    expect(context.addNewGuestData).toEqual(addNewGuestDataMock);
+  });
+
+  it('should check removePerson', () => {
+    spyOn(context.store, 'dispatch').and.stub();
+
+    context.removePerson(addNewGuestDataMock);
+
+    expect(context.store.dispatch).toHaveBeenCalledTimes(2);
+  });
 });
