@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
 
-import {Guest, Title} from '../interfaces/interfaces';
+import {CurrentGuest, PartyTitle} from '../interfaces/interfaces';
 
 @Injectable()
 export class TodoActions {
@@ -32,7 +32,7 @@ export class TodoActions {
     };
   }
 
-  getTitleSuccess(title: Title): Action {
+  getTitleSuccess(title: PartyTitle): Action {
     return {
       type: TodoActions.GET_TITLE_SUCCESS,
       payload: title
@@ -53,7 +53,7 @@ export class TodoActions {
     };
   }
 
-  setTitleSuccess(title: Title): Action {
+  setTitleSuccess(title: PartyTitle): Action {
     return {
       type: TodoActions.SET_NEW_TITLE_SUCCESS,
       payload: title
@@ -73,7 +73,7 @@ export class TodoActions {
     };
   }
 
-  getGuestsSuccess(guests: {guests: Guest[]}): Action {
+  getGuestsSuccess(guests: {guests: CurrentGuest[]}): Action {
     return {
       type: TodoActions.GET_GUESTS_SUCCESS,
       payload: guests
@@ -87,14 +87,14 @@ export class TodoActions {
     };
   }
 
-  addNewGuest(guest: Guest): Action {
+  addNewGuest(guest: CurrentGuest): Action {
     return {
       type: TodoActions.ADD_NEW_GUEST,
       payload: {guest}
     };
   }
 
-  addNewGuestSuccess(guest: {guest: Guest}): Action {
+  addNewGuestSuccess(guest: {guest: CurrentGuest}): Action {
     return {
       type: TodoActions.ADD_NEW_GUEST_SUCCESS,
       payload: {guest}
@@ -108,14 +108,14 @@ export class TodoActions {
     };
   }
 
-  removeGuest(guest: Guest): Action {
+  removeGuest(guest: CurrentGuest): Action {
     return {
       type: TodoActions.REMOVE_GUEST,
       payload: {guest}
     };
   }
 
-  removeGuestSuccess(guest: {guest: Guest}): Action {
+  removeGuestSuccess(guest: {guest: CurrentGuest}): Action {
     return {
       type: TodoActions.REMOVE_GUEST_SUCCESS,
       payload: {guest}

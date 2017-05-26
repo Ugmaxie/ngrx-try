@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {Store} from '@ngrx/store';
+import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 
-import {TodoActions} from './actions';
-import {Guest, ResponseApp} from './interfaces';
-import {AppState} from './app.module';
+import { TodoActions } from './actions';
+import { CurrentGuest, ResponseApp } from './interfaces';
+import { AppState } from './app.module';
 
 @Component({
   selector: 'app-root',
@@ -14,8 +14,8 @@ import {AppState} from './app.module';
 export class AppComponent implements OnInit {
   public title: string;
   public pageTitle: string;
-  public totalGuests: Guest[];
-  public addNewGuestData: Guest;
+  public totalGuests: CurrentGuest[];
+  public addNewGuestData: CurrentGuest;
   private emptyGuestData = {name: '', phone: '', gender: 'male', drunker: false, canBeRemoved: true};
 
   public constructor(private store: Store<AppState>,
@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
   };
 
   public ngOnInit(): void {
-    this.addNewGuestData = this.emptyGuestData;
+    this.addNewGuestData = Object.assign({}, this.emptyGuestData);
 
     this.store.select('myWildReducer')
       .subscribe((res: ResponseApp): void => {
@@ -50,13 +50,13 @@ export class AppComponent implements OnInit {
     this.pageTitle = '';
   }
 
-  public addPerson(guest: Guest): void {
+  public addPerson(guest: CurrentGuest): void {
     this.store.dispatch(this.todoActions.addNewGuest(guest));
     this.store.dispatch(this.todoActions.getGuests());
-    this.addNewGuestData = {name: '', phone: '', gender: 'male', drunker: false, canBeRemoved: true};
+    this.addNewGuestData = Object.assign({}, this.emptyGuestData);
   }
 
-  public removePerson(guest: Guest): void {
+  public removePerson(guest: CurrentGuest): void {
     this.store.dispatch(this.todoActions.removeGuest(guest));
     this.store.dispatch(this.todoActions.getGuests());
   }

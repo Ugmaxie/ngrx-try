@@ -1,4 +1,4 @@
-export interface Guest {
+export interface CurrentGuest {
   name: string;
   phone: string;
   gender: string;
@@ -8,12 +8,12 @@ export interface Guest {
 
 export interface ResponseApp {
   title?: string;
-  guest?: Guest;
-  guests?: Guest[];
-  pending?: boolean;
+  guest?: CurrentGuest;
+  guests?: CurrentGuest[];
+  pendingResponse?: boolean;
   error?: string;
 }
 
-export interface Title {
+export interface PartyTitle {
   title: string;
 }

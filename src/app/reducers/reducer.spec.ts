@@ -15,7 +15,7 @@ describe('Reducer.', () => {
       type: '[Party Name] Get Title'
     });
 
-    expect(newState.pending).toEqual(true);
+    expect(newState.pendingResponse).toEqual(true);
   });
 
   it('should send request for getting title, got success and return new state', () => {
@@ -24,7 +24,7 @@ describe('Reducer.', () => {
       payload: {title: 'GET TITLE'}
     });
 
-    expect(newState.pending).toEqual(false);
+    expect(newState.pendingResponse).toEqual(false);
     expect(newState.title).toEqual('GET TITLE');
   });
 
@@ -34,7 +34,7 @@ describe('Reducer.', () => {
       payload: new Error('Error of Errors!')
     });
 
-    expect(newState.pending).toEqual(false);
+    expect(newState.pendingResponse).toEqual(false);
     expect(newState.error).toEqual(new Error('Error of Errors!'));
   });
 
@@ -43,7 +43,7 @@ describe('Reducer.', () => {
       type: '[Party Name] Set New Title'
     });
 
-    expect(newState.pending).toEqual(true);
+    expect(newState.pendingResponse).toEqual(true);
     expect(newState.title).toBeUndefined();
   });
 
@@ -53,7 +53,7 @@ describe('Reducer.', () => {
       payload: {title: 'SET NEWEST TITLE'}
     });
 
-    expect(newState.pending).toEqual(false);
+    expect(newState.pendingResponse).toEqual(false);
     expect(newState.title).toEqual('SET NEWEST TITLE');
   });
 
@@ -63,7 +63,7 @@ describe('Reducer.', () => {
       payload: new Error('Error of Errors!')
     });
 
-    expect(newState.pending).toEqual(false);
+    expect(newState.pendingResponse).toEqual(false);
     expect(newState.error).toEqual(new Error('Error of Errors!'));
   });
 
@@ -72,7 +72,7 @@ describe('Reducer.', () => {
       type: '[Guest] Add New Guest'
     });
 
-    expect(newState.pending).toEqual(true);
+    expect(newState.pendingResponse).toEqual(true);
     expect(newState.title).toBeUndefined();
   });
 
@@ -82,7 +82,7 @@ describe('Reducer.', () => {
       payload: { guest: guestMock }
     });
 
-    expect(newState.pending).toEqual(false);
+    expect(newState.pendingResponse).toEqual(false);
     expect(newState.guest).toEqual(guestMock);
   });
 
@@ -92,7 +92,7 @@ describe('Reducer.', () => {
       payload: new Error('Error of Errors!')
     });
 
-    expect(newState.pending).toEqual(false);
+    expect(newState.pendingResponse).toEqual(false);
     expect(newState.error).toEqual(new Error('Error of Errors!'));
   });
 
@@ -101,7 +101,7 @@ describe('Reducer.', () => {
       type: '[Guest] Remove Guest'
     });
 
-    expect(newState.pending).toEqual(true);
+    expect(newState.pendingResponse).toEqual(true);
     expect(newState.guest).toBeUndefined();
   });
 
@@ -111,7 +111,7 @@ describe('Reducer.', () => {
       payload: {guest: guestMock}
     });
 
-    expect(newState.pending).toEqual(false);
+    expect(newState.pendingResponse).toEqual(false);
     expect(newState.guest).toEqual(guestMock);
   });
 
@@ -121,14 +121,14 @@ describe('Reducer.', () => {
       payload: new Error('Error of Errors!')
     });
 
-    expect(newState.pending).toEqual(false);
+    expect(newState.pendingResponse).toEqual(false);
     expect(newState.error).toEqual(new Error('Error of Errors!'));
   });
 
   it('should send request to get guests and return new state', () => {
     const newState = myWildReducer(oldState, {type: '[Guests] Get Guests'});
 
-    expect(newState.pending).toEqual(true);
+    expect(newState.pendingResponse).toEqual(true);
     expect(newState.guests).toBeUndefined();
   });
 
@@ -138,7 +138,7 @@ describe('Reducer.', () => {
       payload: {guests: [guestMock]}
     });
 
-    expect(newState.pending).toEqual(false);
+    expect(newState.pendingResponse).toEqual(false);
     expect(newState.guests).toEqual([guestMock]);
   });
 
@@ -148,7 +148,7 @@ describe('Reducer.', () => {
       payload: new Error('Error of Errors!')
     });
 
-    expect(newState.pending).toEqual(false);
+    expect(newState.pendingResponse).toEqual(false);
     expect(newState.error).toEqual(new Error('Error of Errors!'));
   });
 });

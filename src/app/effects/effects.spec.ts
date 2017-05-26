@@ -10,7 +10,7 @@ import { ProfileEffects } from './effects';
 import { AppService, GuestService } from '../shared';
 import { TodoActions } from '../actions';
 import * as reducer from '../reducers/reducer';
-import {Guest} from '../interfaces/interfaces';
+import { CurrentGuest } from '../interfaces/interfaces';
 
 describe('Effects.', () => {
   let runner;
@@ -18,7 +18,7 @@ describe('Effects.', () => {
   let appService;
   let guestService;
   let todoActions;
-  const newGuestMock: Guest = {
+  const newGuestMock: CurrentGuest = {
     name: 'John Doe',
     phone: '911',
     gender: 'male',

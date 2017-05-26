@@ -1,1 +1,1 @@
-export { Guest, ResponseApp } from './interfaces';
+export { CurrentGuest, ResponseApp } from './interfaces';
